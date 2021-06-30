@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Admin\Controllers;
+
+use App\Models\Product;
+use Dcat\Admin\Form;
+use Dcat\Admin\Grid;
+use Dcat\Admin\Show;
+use Dcat\Admin\Http\Controllers\AdminController;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
+class ProductController extends AdminController
+{
+    /**
+     * Make a grid builder.
+     *
+     * @return Grid
+     */
+    protected function grid()
+    {
+        return Grid::make(new Product(), function (Grid $grid) {
+            $grid->column('id')->sortable();
+            $grid->column('title');
+            $grid->column('image')->image();
+            $grid->column('model')->image();
+            $grid->column('serial');
+            $grid->column('qrcode')->display(function() {
+                return QrCode::generate('http://192.168.3.15/admin/show/'.$this->id);
+            });
+            $grid->column('查看释义列表')->display(function (){
+                $product_id = $this->id;
+                return '<a href="/admin/explain/product_id/'.$product_id.'">结果详情</a>';
+            });
+            //$grid->column('created_at');
+            //$grid->column('updated_at')->sortable();
+
+            $grid->filter(function (Grid\Filter $filter) {
+                $filter->equal('id');
+
+            });
+        });
+    }
+
+    /**
+     * Make a show builder.
+     *
+     * @param mixed $id
+     *
+     * @return Show
+     */
+    protected function detail($id)
+    {
+        return Show::make($id, new Product(), function (Show $show) {
+            $show->field('id');
+            $show->field('title');
+            $show->field('image');
+            $show->field('model');
+            $show->field('serial');
+            $show->field('qrcode');
+            $show->field('created_at');
+            $show->field('updated_at');
+        });
+    }
+
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
+    protected function form()
+    {
+        return Form::make(new Product(), function (Form $form) {
+            $form->display('id');
+            $form->text('title');
+            $form->image('image')->autoUpload();
+            $form->image('model')->autoUpload();
+            $form->text('serial')->required();//todo 唯一性校验
+            $form->display('created_at');
+            $form->display('updated_at');
+        });
+    }
+}
