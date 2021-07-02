@@ -7,6 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends AdminController
@@ -21,16 +22,22 @@ class ProductController extends AdminController
         return Grid::make(new Product(), function (Grid $grid) {
             $grid->column('id')->sortable();
             $grid->column('title');
-            $grid->column('image')->image();
-            $grid->column('model')->image();
+            $grid->column('image')->image('',100,100);
+            $grid->column('model')->display(function (){
+                return Storage::disk(config('admin.upload.disk'))->url('images/d10c5c39c3438678bd98a030b6d7e506.jpeg');
+            })->image('',100,100);
             $grid->column('serial');
             $grid->column('qrcode')->display(function() {
-                return QrCode::generate('http://192.168.3.15/admin/show/'.$this->id);
+                //return env('APP_URL').'/admin/show/'.$this->serial;
+                //return QrCode::generate(env('APP_URL').'/web/product/'.$this->serial);
+
+                return 'http://10.0.9.65/web/product/'.$this->serial;
+                //return QrCode::generate('http://10.0.9.65/web/product/'.$this->serial);
             });
-            $grid->column('查看释义列表')->display(function (){
-                $product_id = $this->id;
-                return '<a href="/admin/explain/product_id/'.$product_id.'">结果详情</a>';
-            });
+//            $grid->column('查看释义列表')->display(function (){
+//                $product_id = $this->id;
+//                return '<a href="/admin/report/product_id/'.$product_id.'">结果详情</a>';
+//            });
             //$grid->column('created_at');
             //$grid->column('updated_at')->sortable();
 
@@ -56,7 +63,7 @@ class ProductController extends AdminController
             $show->field('image');
             $show->field('model');
             $show->field('serial');
-            $show->field('qrcode');
+            $show->field('type');
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -73,7 +80,7 @@ class ProductController extends AdminController
             $form->display('id');
             $form->text('title');
             $form->image('image')->autoUpload();
-            $form->image('model')->autoUpload();
+            $form->text('type');
             $form->text('serial')->required();//todo 唯一性校验
             $form->display('created_at');
             $form->display('updated_at');

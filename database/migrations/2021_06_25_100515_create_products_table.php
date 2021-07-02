@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable()->comment('图片');
             $table->string('model')->nullable()->comment('产品对应的模型');
             $table->string('serial')->default('')->comment('产品编号');
-            $table->string('qr_code')->default('')->comment('二维码');
+            $table->integer('type')->default(1)->comment('模型类型');
             $table->timestamps();
         });
     }

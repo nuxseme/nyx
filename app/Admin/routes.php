@@ -14,8 +14,6 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
     $router->resource('product', 'ProductController');
-    $router->resource('explain', 'ExplainController');
-    $router->get('report/product/{product_id}/explain/{explain_id}', 'ReportController@info');
-    $router->get('show/{product_id}', 'ShowController@info');
+    $router->resource('report', 'ReportController');
 
 });

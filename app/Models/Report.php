@@ -6,9 +6,9 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Explain extends Model
+class Report extends Model
 {
 	use HasDateTimeFormatter;
-    protected $table = 'explain';
+    protected $table = 'report';
 
 }
