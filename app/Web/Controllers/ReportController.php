@@ -2,9 +2,11 @@
 
 namespace App\Web\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Report;
 use App\Models\Subject;
+
 class ReportController extends Controller
 {
     public function index()
@@ -12,13 +14,14 @@ class ReportController extends Controller
         return view('product');
     }
 
-    public function info($serial)
+    public function info()
     {
-        $unit=[1,0,3];
+        $serial = request()->get('serial');
+        $unit = json_decode(request()->get('unit'),true);
         $index = [];
+
         foreach ($unit as $key=>$value) {
-            $prefix = $key+1;
-            $index[] = intval(($prefix.$value));
+            $index[] = intval(($key.$value));
         }
         $subject = new Subject();
         $subjectData = array_column($subject->where('serial',$serial)->get()->toArray(),null,'unit');

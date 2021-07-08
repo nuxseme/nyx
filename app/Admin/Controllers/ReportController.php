@@ -19,7 +19,11 @@ class ReportController extends AdminController
     protected function grid()
     {
         return Grid::make(new Report(), function (Grid $grid) {
-            $grid->column('id')->sortable();
+            //$grid->column('id')->sortable();
+            $grid->toolsWithOutline(false);
+            $grid->number('序号');
+            $grid->model()->orderBy('serial');
+            $grid->model()->orderBy('unit');
             $grid->column('product_title','产品标题')->display(function (){
                 return Product::where('serial',$this->serial)->first()->title;
             });
