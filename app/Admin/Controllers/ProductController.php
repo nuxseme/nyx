@@ -27,13 +27,11 @@ class ProductController extends AdminController
                 return env('APP_URL').'/img/modes/'.$this->type.'.png';
             })->image('',100,100);
             $grid->column('serial');
+            $grid->column('qrcode_link')->display(function (){
+                return env('APP_URL').'/web/product/'.$this->serial;
+            });
             $grid->column('qrcode')->display(function() {
-                if(env('APP_ENV') == 'product') {
-                    //return QrCode::generate(env('APP_URL').'/web/product/'.$this->serial);
-                    return env('APP_URL').'/web/product/'.$this->serial;
-                }else{
-                    return 'http://10.0.9.65/web/product/'.$this->serial;
-                }
+                return QrCode::size(50)->generate(env('APP_URL').'/web/product/'.$this->serial);
             });
 
 //            $grid->column('查看释义列表')->display(function (){
