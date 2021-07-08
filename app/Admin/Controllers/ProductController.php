@@ -28,12 +28,14 @@ class ProductController extends AdminController
             })->image('',100,100);
             $grid->column('serial');
             $grid->column('qrcode')->display(function() {
-                //return env('APP_URL').'/admin/show/'.$this->serial;
-                //return QrCode::generate(env('APP_URL').'/web/product/'.$this->serial);
+                if(env('APP_ENV') == 'product') {
+                    //return QrCode::generate(env('APP_URL').'/web/product/'.$this->serial);
+                    return env('APP_URL').'/web/product/'.$this->serial;
+                }else{
+                    return 'http://10.0.9.65/web/product/'.$this->serial;
+                }
+            });
 
-                return 'http://10.0.9.65/web/product/'.$this->serial;
-                //return QrCode::generate('http://10.0.9.65/web/product/'.$this->serial);
-            })->link();
 //            $grid->column('查看释义列表')->display(function (){
 //                $product_id = $this->id;
 //                return '<a href="/admin/report/product_id/'.$product_id.'">结果详情</a>';
