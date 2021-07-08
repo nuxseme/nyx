@@ -12,7 +12,7 @@ Route::group([
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index');
+    Route::redirect('/', '/admin/product');
     $router->resource('product', 'ProductController');
     $router->resource('report', 'ReportController');
     $router->resource('subject', 'SubjectController');
