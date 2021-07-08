@@ -24,7 +24,7 @@ class ProductController extends AdminController
             $grid->column('title');
             $grid->column('image')->image('',100,100);
             $grid->column('model')->display(function (){
-                return Storage::disk(config('admin.upload.disk'))->url('images/d10c5c39c3438678bd98a030b6d7e506.jpeg');
+                return env('APP_URL').'/img/modes/'.$this->type.'.png';
             })->image('',100,100);
             $grid->column('serial');
             $grid->column('qrcode')->display(function() {
@@ -33,7 +33,7 @@ class ProductController extends AdminController
 
                 return 'http://10.0.9.65/web/product/'.$this->serial;
                 //return QrCode::generate('http://10.0.9.65/web/product/'.$this->serial);
-            });
+            })->link();
 //            $grid->column('查看释义列表')->display(function (){
 //                $product_id = $this->id;
 //                return '<a href="/admin/report/product_id/'.$product_id.'">结果详情</a>';
@@ -82,8 +82,6 @@ class ProductController extends AdminController
             $form->image('image')->autoUpload();
             $form->text('type');
             $form->text('serial')->required();//todo 唯一性校验
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }

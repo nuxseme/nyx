@@ -24,6 +24,8 @@ class ReportController extends AdminController
                 return Product::where('serial',$this->serial)->first()->title;
             });
             $grid->column('unit');
+            $grid->column('sign');
+            $grid->column('sign_info','指示标识说明');
             $grid->column('info')->display(function (){
                 return strip_tags($this->info);
             })->limit('20');
@@ -50,6 +52,8 @@ class ReportController extends AdminController
             $show->field('id');
             $show->field('serial');
             $show->field('unit');
+            $show->field('sign');
+            $show->field('sign_info');
             $show->info('结果描述')->unescape();
             $show->field('suggest');
             $show->field('created_at');
@@ -66,8 +70,12 @@ class ReportController extends AdminController
     {
         return Form::make(new Report(), function (Form $form) {
             $form->display('id');
+            $form->hidden('index');
+            $form->index = intval($form->unit.$form->sign);
             $form->text('serial','产品编号');
             $form->text('unit','产品模型单元');
+            $form->text('sign','指示标识');
+            $form->text('sign_info','指示标识说明');
             $form->editor('info');
             $form->editor('suggest');
             $form->display('created_at');
