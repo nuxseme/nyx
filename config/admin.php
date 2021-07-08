@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/vendor/dcat-admin/images/logo.png" width="35"> &nbsp;检测说明帮助系统',
+    'logo' => '<img src="/vendor/dcat-admin/images/logo.png" width="35"> &nbsp;助测后台管理系统',
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +88,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => '检测说明帮助系统',
+    'title' => '助测后台管理系统',
 
     /*
     |--------------------------------------------------------------------------
@@ -194,7 +194,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'helpers' => [
-        'enable' => false,
+        'enable' => true,
     ],
 
     /*

@@ -2,14 +2,13 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Product;
-use App\Models\Report;
+use App\Admin\Repositories\Subject;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
-class ReportController extends AdminController
+class SubjectController extends AdminController
 {
     /**
      * Make a grid builder.
@@ -18,21 +17,18 @@ class ReportController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new Report(), function (Grid $grid) {
+        return Grid::make(new Subject(), function (Grid $grid) {
             $grid->column('id')->sortable();
-            $grid->column('product_title','产品标题')->display(function (){
-                return Product::where('serial',$this->serial)->first()->title;
-            });
+            $grid->column('serial');
             $grid->column('unit');
-            $grid->column('info')->display(function (){
-                return strip_tags($this->info);
+            $grid->column('title');
+            $grid->column('wiki')->display(function (){
+                return strip_tags($this->wiki);
             })->limit('20');
-            $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id','报告ID');
-                $filter->equal('serial','产品编号');
+                $filter->equal('id');
+
             });
         });
     }
@@ -46,12 +42,12 @@ class ReportController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new Report(), function (Show $show) {
+        return Show::make($id, new Subject(), function (Show $show) {
             $show->field('id');
             $show->field('serial');
             $show->field('unit');
-            $show->info('结果描述')->unescape();
-            $show->field('suggest');
+            $show->field('title');
+            $show->field('wiki');
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -64,12 +60,12 @@ class ReportController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new Report(), function (Form $form) {
+        return Form::make(new Subject(), function (Form $form) {
             $form->display('id');
-            $form->text('serial','产品编号');
-            $form->text('unit','产品模型单元');
-            $form->editor('info');
-            $form->editor('suggest');
+            $form->text('serial');
+            $form->text('unit');
+            $form->text('title');
+            $form->editor('wiki');
             $form->display('created_at');
             $form->display('updated_at');
         });

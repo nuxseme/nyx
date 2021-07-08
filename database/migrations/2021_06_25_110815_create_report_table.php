@@ -19,7 +19,6 @@ class CreateReportTable extends Migration
             $table->integer('unit')->comment('产品模型单元');
             $table->longText('suggest')->comment('建议');
             $table->longText('info')->comment('结果解释');
-            $table->longText('wiki')->comment('wiki');
             $table->timestamps();
         });
     }
