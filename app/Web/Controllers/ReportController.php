@@ -12,29 +12,28 @@ class ReportController extends Controller
         return view('product');
     }
 
-    public function info($serial,$unit)
+    public function info($serial)
     {
+        $unit=[1,0,3];
         $index = [];
         foreach ($unit as $key=>$value) {
-            $index[] = intval((($key+1).$value));
+            $prefix = $key+1;
+            $index[] = intval(($prefix.$value));
         }
-
         $subject = new Subject();
-        $subjectData = array_column($subject->where('serial',$serial)->get()->toArray(),'unit');
-
-
+        $subjectData = array_column($subject->where('serial',$serial)->get()->toArray(),null,'unit');
 
         //todo 解析index
         $report = new Report();
         $reportData =  $report->where('serial',$serial)
-            ->whereIn('index',[10,21])->get()->toArray();
+            ->whereIn('index',$index)->get()->toArray();
 
         foreach ($reportData as  &$reportDatum) {
-            $reportDatum['subject_title'] = $subjectData[$reportDatum['unit']]['title'];
-            $reportDatum['wiki'] = $subjectData[$reportDatum['unit']]['wiki'];
+            $reportDatum['subject_title'] = $subjectData[$reportDatum['unit']]['title'] ?? '';
+            $reportDatum['wiki'] = $subjectData[$reportDatum['unit']]['wiki'] ?? '';
         }
-        
-        return json_encode($reportData);
+
+        return response()->json($reportData);
 
     }
 }
