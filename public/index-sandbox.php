@@ -45,7 +45,7 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
-$app->loadEnvironmentFrom('.env.test');
+$app->loadEnvironmentFrom('.env.sandbox');
 
 $kernel = $app->make(Kernel::class);
 
