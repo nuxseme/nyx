@@ -66,7 +66,19 @@ return [
         'middleware' => ['web', 'admin'],
 
         'enable_session_middleware' => false,
+        'api' => [
+            'domain' => env('ADMIN_ROUTE_DOMAIN'),
+
+            'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin/api'),
+
+            'namespace' => 'App\\Admin\\Controllers\\Api',
+
+            'middleware' => ['web', 'admin'],
+
+            'enable_session_middleware' => false,
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
