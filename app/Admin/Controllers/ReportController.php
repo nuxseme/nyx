@@ -28,14 +28,16 @@ class ReportController extends AdminController
             $grid->column('product_title','产品标题')->display(function (){
                 return Product::where('serial',$this->serial)->first()->title;
             });
-            $grid->column('unit');
+            $grid->column('unit')->display(function (){
+                return sprintf('第%s联',$this->unit);
+            });
             $grid->column('sign');
             $grid->column('sign_info','指示标识说明');
             $grid->column('info')->display(function (){
                 return strip_tags($this->info);
             })->limit('20');
-            $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
+//            $grid->column('created_at');
+//            $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id','报告ID');

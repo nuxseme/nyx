@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\Subject;
+use App\Models\Product;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -20,8 +21,13 @@ class SubjectController extends AdminController
     {
         return Grid::make(new Subject(), function (Grid $grid) {
             $grid->column('id')->sortable();
+            $grid->column('product_title','产品标题')->display(function (){
+                return Product::where('serial',$this->serial)->first()->title;
+            });
             $grid->column('serial');
-            $grid->column('unit');
+            $grid->column('unit')->display(function (){
+                return sprintf('第%s联',$this->unit);
+            });
             $grid->column('title');
             $grid->column('wiki')->display(function (){
                 return strip_tags($this->wiki);
@@ -63,8 +69,8 @@ class SubjectController extends AdminController
     {
         return Form::make(new Subject(), function (Form $form) {
             $form->display('id');
-            $form->text('serial');
-            $form->text('unit');
+            $form->select('serial','产品编号')->options((new Product())::all()->pluck('serial','serial'))->load('unit','api/product/unit');
+            $form->select('unit','产品模型单元');
             $form->text('title');
             $form->editor('wiki');
             $form->display('created_at');
