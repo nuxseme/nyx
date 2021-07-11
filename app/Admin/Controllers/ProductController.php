@@ -28,10 +28,14 @@ class ProductController extends AdminController
             $grid->column('serial');
             $grid->column('qrcode_link')->display(function (){
                 return env('APP_URL').'/web/product/'.$this->serial;
-            });
+                //return 'http://192.168.1.102/web/product/'.$this->serial;
+            })->link();
             $grid->column('qrcode')->display(function() {
                 return QrCode::size(50)->generate(env('APP_URL').'/web/product/'.$this->serial);
             });
+//            $grid->column('qrcode')->display(function() {
+//                return QrCode::size(50)->generate('http://192.168.1.102/web/product/'.$this->serial);
+//            });
 
 //            $grid->column('查看释义列表')->display(function (){
 //                $product_id = $this->id;
