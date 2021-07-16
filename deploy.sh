@@ -1,4 +1,4 @@
 cd /code/nyx
 pwd
 git  pull
-date > version.html
+date > public/version.html
