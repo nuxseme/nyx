@@ -1,3 +1,7 @@
+install:
+  - sudo apt-get install sshpass ssh -y
+
+
 notifications:
   email:
     - nuxseme@gmail.com
@@ -5,10 +9,11 @@ notifications:
   on_failure: always
 
 script:
-  - ssh -V
+  - sshpass -V
+
 addons:
   ssh_known_hosts: ${SERVER_HOST}
 
 after_success:
-  - ssh ${USERNAME}@${SERVER_HOST} -p ${PASSWORD} 'ls'
+  - sshpass -p ${PASSWORD} ssh ${USERNAME}@${SERVER_HOST} 'ls'
 
