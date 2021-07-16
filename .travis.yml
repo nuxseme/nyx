@@ -15,6 +15,6 @@ before_install:
 after_success:
   - cat ~/.ssh/known_hosts
   - cat ~/.ssh/config
-  - ll ~/.ssh/
-  - ssh ${USERNAME}@${SERVER_HOST} 'ls'
+  - ls ~/.ssh/
+  - ssh ${USERNAME}@${SERVER_HOST} -vvv
 
