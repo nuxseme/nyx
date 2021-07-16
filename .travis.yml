@@ -12,5 +12,5 @@ script:
   - sshpass -V
 
 after_script:
-  - sshpass -p ${PASSWORD} ssh ${USERNAME}@${SERVER_HOST} < deploy.sh
+  - sshpass -p ${PASSWORD} ssh ${USERNAME}@${SERVER_HOST} "cd /code/nyx;pwd"
 
