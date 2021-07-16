@@ -8,12 +8,13 @@ addons:
   ssh_known_hosts:
     - ${SERVER_HOST}
 before_install:
-   - echo -e "Host ${SERVER_HOST}\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+   - echo -e "Host 47.88.8.216\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
    - openssl aes-256-cbc -K $encrypted_a6b36f5c33c8_key -iv $encrypted_a6b36f5c33c8_iv
      -in deploy_key.enc -out ~/.ssh/deploy_key -d
 
 after_success:
   - cat $HOME/.ssh/known_hosts
   - cat ~/.ssh/config
+  - ll ~/.ssh/
   - ssh ${USERNAME}@${SERVER_HOST} 'ls'
 
