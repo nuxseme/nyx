@@ -1,0 +1,16 @@
+install:
+  - sudo apt-get install sshpass ssh -y
+
+
+notifications:
+  email:
+    - nuxseme@gmail.com
+  on_success: always
+  on_failure: always
+
+script:
+  - sshpass -V
+
+after_script:
+  - sshpass -p ${PASSWORD} ssh ${USERNAME}@${SERVER_HOST} < deploy.sh
+
