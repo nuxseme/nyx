@@ -1,9 +1,10 @@
- notifications:
+language: generic
+notifications:
   email:
   - nuxseme@gmail.com
   on_success: always
   on_failure: always
- before_install:
+before_install:
    - gem install bundler
    - openssl aes-256-cbc -K $encrypted_a6b36f5c33c8_key -iv $encrypted_a6b36f5c33c8_iv
      -in deploy_key.enc -out ~/.ssh/deploy_key -d
