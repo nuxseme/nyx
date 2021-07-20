@@ -29,7 +29,7 @@ class ReportController extends Controller
         //todo 解析index
         $report = new Report();
         $reportData =  $report->where('serial',$serial)
-            ->whereIn('index',$index)->get()->toArray();
+            ->whereIn('index',$index)->orderBy('unit')->get()->toArray();
 
         foreach ($reportData as  &$reportDatum) {
             $reportDatum['subject_title'] = $subjectData[$reportDatum['unit']]['title'] ?? '';
