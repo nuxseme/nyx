@@ -25,6 +25,7 @@ class ReportController extends AdminController
             $grid->number('序号');
             $grid->model()->orderBy('serial');
             $grid->model()->orderBy('unit');
+            $grid->model()->orderBy('sign');
             $grid->column('product_title','产品标题')->display(function (){
                 return Product::where('serial',$this->serial)->first()->title;
             });
