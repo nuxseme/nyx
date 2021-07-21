@@ -160,8 +160,7 @@ return [
         'except' => [
             'auth/login',
             'auth/logout',
-            'report/*',
-            'show/*'
+            'api/*',
         ],
 
         'enable_session_middleware' => false,
