@@ -28,10 +28,14 @@ class ProductController extends AdminController
                 return env('APP_URL').'/img/modes/'.$this->type.'.png';
             })->image('',100,100);
             $grid->column('serial');
-            $grid->column('qrcode_link')->display(function (){
-                return env('APP_URL').'/web/product/'.$this->serial;
-                //return 'http://192.168.1.102/web/product/'.$this->serial;
-            })->link();
+            if(env('APP_ENV') == 'sandbox' || env('APP_ENV') == 'local') {
+
+                $grid->column('qrcode_link')->display(function (){
+                    return env('APP_URL').'/web/product/'.$this->serial;
+                    //return 'http://192.168.1.102/web/product/'.$this->serial;
+                })->link();
+            }
+
             $grid->column('qrcode')->display(function() {
                 return QrCode::size(50)->generate(env('APP_URL').'/web/product/'.$this->serial);
             });
