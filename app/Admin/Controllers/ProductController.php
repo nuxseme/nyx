@@ -24,7 +24,7 @@ class ProductController extends AdminController
             $grid->model()->orderBy('type');
             //$grid->column('id')->sortable();
             $grid->number('序号');
-            $grid->column('title');
+            $grid->column('title')->limit('20');;
             $grid->column('image')->image('',100,100);
             $grid->column('model')->display(function (){
                 return env('APP_URL').'/img/modes/'.$this->type.'.png';

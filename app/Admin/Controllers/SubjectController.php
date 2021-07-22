@@ -25,7 +25,7 @@ class SubjectController extends AdminController
             $grid->column('title','科目标题');
             $grid->column('product_title','产品标题')->display(function (){
                 return Product::where('serial',$this->serial)->first()->title;
-            });
+            })->limit('20');;
             $grid->column('serial','产品编号');
             $grid->column('unit')->display(function (){
                 return sprintf('第%s联',$this->unit);
