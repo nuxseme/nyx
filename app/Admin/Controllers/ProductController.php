@@ -7,6 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Config;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends AdminController
@@ -70,9 +71,11 @@ class ProductController extends AdminController
             $show->field('id');
             $show->field('title');
             $show->field('image');
-            $show->field('model');
+            $show->field('model')->as(function (){
+                return env('APP_URL').'/img/modes/'.$this->type.'.png';
+            })->image('',100,100);
             $show->field('serial');
-            $show->field('type');
+            $show->field('type','模型类型');
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -89,7 +92,19 @@ class ProductController extends AdminController
             $form->display('id');
             $form->text('title');
             $form->image('image')->autoUpload();
-            $form->text('type');
+            $form->select('type','模型类型')->options(function (){
+
+                 $modes = array_keys(Config::get('constants.mode'));
+
+                 $result = [];
+
+                 foreach ($modes as  $mode) {
+                     $result[$mode] = '模型'.$mode;
+                 }
+
+                 return $result;
+
+            });
             $form->text('serial')->required();//todo 唯一性校验
         });
     }
