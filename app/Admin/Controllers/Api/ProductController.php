@@ -19,7 +19,7 @@ class ProductController extends Controller
         foreach ($unit as $value) {
             $data[] = [
                 'id' => $value,
-                'text' => $value
+                'text' => '第'.$value.'联'
             ];
         }
 

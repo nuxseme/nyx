@@ -61,7 +61,9 @@ class ReportController extends AdminController
         return Show::make($id, new Report(), function (Show $show) {
             $show->field('id');
             $show->field('serial');
-            $show->field('unit');
+            $show->field('unit')->as(function (){
+                return sprintf('第%s联',$this->unit);
+            });;
             $show->field('sign');
             $show->field('sign_info');
             $show->info('结果描述')->unescape();
