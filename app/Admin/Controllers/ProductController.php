@@ -22,7 +22,8 @@ class ProductController extends AdminController
         return Grid::make(new Product(), function (Grid $grid) {
             $grid->model()->orderBy('serial');
             $grid->model()->orderBy('type');
-            $grid->column('id')->sortable();
+            //$grid->column('id')->sortable();
+            $grid->number('序号');
             $grid->column('title');
             $grid->column('image')->image('',100,100);
             $grid->column('model')->display(function (){

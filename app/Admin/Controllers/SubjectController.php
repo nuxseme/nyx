@@ -20,15 +20,16 @@ class SubjectController extends AdminController
     protected function grid()
     {
         return Grid::make(new Subject(), function (Grid $grid) {
-            $grid->column('id')->sortable();
+            //$grid->column('id')->sortable();
+            $grid->number('序号');
+            $grid->column('title','科目标题');
             $grid->column('product_title','产品标题')->display(function (){
                 return Product::where('serial',$this->serial)->first()->title;
             });
-            $grid->column('serial');
+            $grid->column('serial','产品编号');
             $grid->column('unit')->display(function (){
                 return sprintf('第%s联',$this->unit);
             });
-            $grid->column('title');
             $grid->column('wiki')->display(function (){
                 return strip_tags($this->wiki);
             })->limit('20');
@@ -52,8 +53,10 @@ class SubjectController extends AdminController
         return Show::make($id, new Subject(), function (Show $show) {
             $show->field('id');
             $show->field('serial');
-            $show->field('unit');
-            $show->field('title');
+            $show->field('unit')->as(function (){
+                return sprintf('第%s联',$this->unit);
+            });;
+            $show->field('title','科目标题');
             $show->field('wiki');
             $show->field('created_at');
             $show->field('updated_at');
@@ -71,7 +74,7 @@ class SubjectController extends AdminController
             $form->display('id');
             $form->select('serial','产品编号')->options((new Product())::all()->pluck('serial','serial'))->load('unit','api/product/unit');
             $form->select('unit','产品模型单元');
-            $form->text('title');
+            $form->text('title','科目标题');
             $form->editor('wiki');
             $form->display('created_at');
             $form->display('updated_at');
